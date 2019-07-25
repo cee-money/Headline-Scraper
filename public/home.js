@@ -27,6 +27,8 @@ function getArticles() {
 
             $("#save-btn").on("click", function() {
 
+                $("#save-btn").text("Saved");
+
                 $.ajax({
                     method: "PUT",
                     url: "/save/" + $(this).attr("data-id")

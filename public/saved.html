@@ -60,6 +60,41 @@
     </div>
 </div>
 
+<!--Comment Modal-->
+<div class="container text-black bg-dark">
+    <div class="row">
+        <div class="col-12">
+            <div class="modal fade" id="comment-modal" tabindex="-1" role="dialog" aria-labelledby="title" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h4 class="modal-title" id="title">Comment</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="send">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input class="form-control col-md-12" type="text" name="name" id="comment-title">
+                            <br> 
+                            <label for="contactbox">Comment</label>
+                            <textarea class="form-control col-md-12" type="text" name="message" id="comment-body" rows="5"></textarea>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="sumbit" id="save-comment">Save</button>
+                    </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
         <script src="./saved.js"></script>
     </body>
 </html>

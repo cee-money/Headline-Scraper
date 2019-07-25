@@ -103,7 +103,7 @@ app.put("/save/:id", function(req, res){
     })
 })
 
-// Route for toggling saved value to true when the saved button is pressed
+// Route for toggling saved value to false when the delete button is pressed
 app.put("/unsave/:id", function(req, res){
     console.log(req.params.id);
     db.Articles.findOneAndUpdate({ _id: req.params.id }, { $set: { saved : false } } )
@@ -115,9 +115,9 @@ app.put("/unsave/:id", function(req, res){
     })
 })
 
-// Route for adding a comment to one article
+// Route for getting comments on one article
 app.get("/article/:id", function(req, res) {
-    db.Article.findOne({ _id: req.params.id })
+    db.Articles.findOne({ _id: req.params.id })
     .populate("comments")
     .then(function(article) {
         res.json(article);
@@ -127,11 +127,11 @@ app.get("/article/:id", function(req, res) {
     });
 });
   
-// Route for saving/updating an Article's associated Comment
+// Route for saving an Article's associated Comment
 app.post("/article/:id", function(req, res) {
     db.Comments.create(req.body)
     .then(function(dbComments) {
-        return db.Articles.findOneAndUpdate({ _id: req.params.id }, { $push: { note: dbComments._id } }, { new: true });
+        return db.Articles.findOneAndUpdate({ _id: req.params.id }, { $push: { comments: dbComments._id } }, { new: true });
     })
     .then(function(comments) {
         res.json(comments);

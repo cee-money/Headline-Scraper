@@ -69,7 +69,6 @@
                     </button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="send">
                         <div class="form-group">
                             <label>Title</label>
                             <input class="form-control col-md-12" type="text" name="name" id="comment-title">
@@ -80,8 +79,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary save-comment" type="sumbit">Save</button>
-                    </form>
+                        <button class="btn btn-secondary" id="save-comment">Save</button>
                     </div>
                 </div>
                 </div>
@@ -89,7 +87,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- View Comments Modal -->
 <div class="modal fade" id="view-comments" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">

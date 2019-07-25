@@ -17,11 +17,9 @@ function getArticles() {
                 var cardHead = $("<div>").addClass("card-header");
                 var cardBody = $("<div>").addClass("card-body");
                 var title = $("<h4>").addClass("card-title").text(data[i].title);
-                // var summary = $("<p>").addClass("card-text").text("Summary to go right here");
                 var link = $("<a>").addClass("text-light").attr("href", data[i].link).attr("target", "_blank").text("View Article");
     
                 $(cardBody).prepend(link);
-                // $(cardBody).prepend(summary);
                 $(cardBody).prepend(title);
                 $(card).prepend(cardBody);
                 $(cardHead).prepend(saveButton);
@@ -40,7 +38,7 @@ function getArticles() {
                     console.log("Saved article");
                 })
 
-                document.location.reload() 
+                document.location.reload();
 
             });
 

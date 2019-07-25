@@ -15,11 +15,9 @@ function getSaved() {
                 var cardHead = $("<div>").addClass("card-header");
                 var cardBody = $("<div>").addClass("card-body");
                 var title = $("<h4>").addClass("card-title").text(data[i].title);
-                // var summary = $("<p>").addClass("card-text").text("Summary to go right here");
                 var link = $("<a>").addClass("text-light").attr("href", data[i].link).attr("target", "_blank").text("View Article");
     
                 $(cardBody).prepend(link);
-                // $(cardBody).prepend(summary);
                 $(cardBody).prepend(title);
                 $(card).prepend(cardBody);
                 $(cardHead).prepend(viewBtn);
@@ -48,24 +46,36 @@ function getSaved() {
             $(".comment").on("click", function() {
 
                 $("#comment-modal").modal("toggle");
+                $("#save-comment").attr("data-id", $(this).attr("data-id"));
 
             });
 
-            $(".save-comment").on("click", function() {
+            $("#save-comment").on("click", function() {
+                console.log("Hitting here");
 
                 // add comment title and body to comment collection
                 // (title and body, send to backend for a post route)
 
-                // title = $("#comment-title").val().trim();
-                // body = $("comment-body").val().trim();
+                // var newComment = {
+                    
+                // }
 
-                // $.ajax({
-                //     method: "POST",
-                //     url: "/comment/" + $(this).attr("data-id")
-                // })
-                // .then(function(data) {
-                //     console.log("Comment posted");
-                // })
+                $.ajax({
+                    method: "POST",
+                    url: "/article/" + $(this).attr("data-id"),
+                    data: JSON.stringify({
+                        title: $("#comment-title").val().trim(),
+                        body: $("#comment-body").val().trim()
+                    }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json"
+                })
+                .then(function(data) {
+                    console.log("Comment posted");
+                    $("#comment-modal").modal("toggle");
+                    $("#comment-title").val("");
+                    $("#comment-body").val("");
+                })
      
             });
 
@@ -74,27 +84,30 @@ function getSaved() {
 
                 $("#view-comments").modal("toggle");
 
-                if (!data.comments.length == []) {
+                $.getJSON("/article/" + $(this).attr("data-id"), function(data) {
 
-                    for (var i = 0; i < data.comments.length; i++) {
+                    if (!data.comments.length == []) {
 
-                        var title = $("<h4>").text(`Title: ${data[i].comments[i].title}`);
-                        var body = $("<p>").text(`Comment: ${data[i].comments[i].body}`);
-                        var linebreak = $("<br>");
-                        var divider = $("<hr>");
+                        for (var i = 0; i < data.comments.length; i++) {
 
-                        $("#append-comments-here").append(title);
-                        $("#append-comments-here").append(body);
-                        $("#append-comments-here").append(linebreak);
-                        $("#append-comments-here").append(divider);
+                            var title = $("<h4>").text(`Title: ${data.comments[i].title}`);
+                            var body = $("<p>").text(`Comment: ${data.comments[i].body}`);
+                            var linebreak = $("<br>");
+                            var divider = $("<hr>");
+
+                            $("#append-comments-here").append(title);
+                            $("#append-comments-here").append(body);
+                            $("#append-comments-here").append(divider);
+                            $("#append-comments-here").append(linebreak);
+                        }
+
+                    } else {
+
+                        var none = $("<h5>").text("This article has no comments.");
+                        $("#append-comments-here").append(none);
+
                     }
-
-                } else {
-
-                    var none = $("<h5>").text("This article has no comments.");
-                    $("#append-comments-here").append(none);
-
-                }
+                });
             });
 
         } else {
@@ -102,6 +115,6 @@ function getSaved() {
             $("#append-saved").append(message);
         }
     });
-}
+};
 
 getSaved();

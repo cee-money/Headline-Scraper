@@ -6,6 +6,6 @@ body {
     font-family: 'Vidaloka', serif;
 }
 
-#view-btn, #delete-btn, #comment-btn {
+.view, .delete, .comment {
     margin-right: 10px;
 }

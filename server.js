@@ -103,6 +103,18 @@ app.put("/save/:id", function(req, res){
     })
 })
 
+// Route for toggling saved value to true when the saved button is pressed
+app.put("/unsave/:id", function(req, res){
+    console.log(req.params.id);
+    db.Articles.findOneAndUpdate({ _id: req.params.id }, { $set: { saved : false } } )
+    .then(function(updated){
+        res.json(updated)
+    })
+    .catch(function(err) {
+        res.json(err);
+    })
+})
+
 // Route for adding a comment to one article
 app.get("/article/:id", function(req, res) {
     db.Article.findOne({ _id: req.params.id })

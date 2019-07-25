@@ -4,19 +4,24 @@ function getArticles() {
         if (data.length > 0) {
            // For each one
             for (var i = 0; i < data.length; i++) {
-                // Display the apropos information on the page
-    
+
+                // Display the information on the page
                 var space = $("<br>")
                 var card = $("<div>").addClass("card text-white bg-dark");
-                var saveButton = $("<button>").addClass("btn btn-secondary btn-sm").text("Save Article").attr("data-id", data[i]._id).attr("id", "save-btn");
+                var saveButton = $("<button>").addClass("btn btn-secondary btn-sm save").text("Save Article").attr("data-id", data[i]._id);
+                
+                if (data[i].saved === true) {
+                    $(saveButton).text("Saved")
+                }
+
                 var cardHead = $("<div>").addClass("card-header");
                 var cardBody = $("<div>").addClass("card-body");
                 var title = $("<h4>").addClass("card-title").text(data[i].title);
-                var summary = $("<p>").addClass("card-text").text("Summary to go right here");
-                var link = $("<a>").addClass("text-light").attr("href", data[i].link).text("Link");
+                // var summary = $("<p>").addClass("card-text").text("Summary to go right here");
+                var link = $("<a>").addClass("text-light").attr("href", data[i].link).text("View Article");
     
                 $(cardBody).prepend(link);
-                $(cardBody).prepend(summary);
+                // $(cardBody).prepend(summary);
                 $(cardBody).prepend(title);
                 $(card).prepend(cardBody);
                 $(cardHead).prepend(saveButton);
@@ -25,9 +30,7 @@ function getArticles() {
                 $("#append-cards").append(space);
             } 
 
-            $("#save-btn").on("click", function() {
-
-                $("#save-btn").text("Saved");
+            $(".save").on("click", function() {
 
                 $.ajax({
                     method: "PUT",
@@ -36,6 +39,9 @@ function getArticles() {
                 .then(function(data) {
                     console.log("Saved article");
                 })
+                
+                document.location.reload() 
+
             });
 
         } else {

@@ -9,7 +9,7 @@ var ArticlesSchema = new Schema({
   },
   link: {
     type: String,
-    required: true,
+    required: true
   },
   saved: {
     type: Boolean,

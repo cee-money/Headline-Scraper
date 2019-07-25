@@ -39,7 +39,7 @@ function getArticles() {
                 .then(function(data) {
                     console.log("Saved article");
                 })
-                
+
                 document.location.reload() 
 
             });
@@ -63,10 +63,11 @@ $("#scrape-btn").on("click", function() {
     })
       .then(function(data) {
         getArticles();
+        $("#success-modal").modal("toggle");
+
+        var successMessage = $("<h5>").text(`You scraped ${data.length} articles.`);
+        $("#success").append(successMessage);
     })
-
-// display a modal noting data.length (number of articles scraped)
-
 });
 
 

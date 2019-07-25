@@ -16,7 +16,7 @@ function getSaved() {
                 var cardBody = $("<div>").addClass("card-body");
                 var title = $("<h4>").addClass("card-title").text(data[i].title);
                 // var summary = $("<p>").addClass("card-text").text("Summary to go right here");
-                var link = $("<a>").addClass("text-light").attr("href", data[i].link).text("Link");
+                var link = $("<a>").addClass("text-light").attr("href", data[i].link).attr("target", "_blank").text("View Article");
     
                 $(cardBody).prepend(link);
                 // $(cardBody).prepend(summary);
@@ -28,6 +28,7 @@ function getSaved() {
                 $(card).prepend(cardHead);
                 $("#append-saved").append(card);
                 $("#append-saved").append(space);
+
             } 
 
             $(".delete").on("click", function() {
@@ -42,34 +43,63 @@ function getSaved() {
 
                 document.location.reload() 
 
-            })
+            });
 
             $(".comment").on("click", function() {
 
                 $("#comment-modal").modal("toggle");
 
-            })
-
-            $(".view").on("click", function (){
-
-            // open other modal
-            // pull all comments associated with this article data.comments
-            // if array = [] show "This article has no associate comments"
-            // else, for loop to make all of them show, put a remove button on each one to delete from array
-            
-
-            })
+            });
 
             $(".save-comment").on("click", function() {
 
-            // add comment title and body to comment collection
-            // (title and body, send to backend for a post route)
- 
-            })
-        
+                // add comment title and body to comment collection
+                // (title and body, send to backend for a post route)
+
+                // title = $("#comment-title").val().trim();
+                // body = $("comment-body").val().trim();
+
+                // $.ajax({
+                //     method: "POST",
+                //     url: "/comment/" + $(this).attr("data-id")
+                // })
+                // .then(function(data) {
+                //     console.log("Comment posted");
+                // })
+     
+            });
+
+            // associate these with the articles using the data-id somehow
+            $(".view").on("click", function (){
+
+                $("#view-comments").modal("toggle");
+
+                if (!data.comments.length == []) {
+
+                    for (var i = 0; i < data.comments.length; i++) {
+
+                        var title = $("<h4>").text(`Title: ${data[i].comments[i].title}`);
+                        var body = $("<p>").text(`Comment: ${data[i].comments[i].body}`);
+                        var linebreak = $("<br>");
+                        var divider = $("<hr>");
+
+                        $("#append-comments-here").append(title);
+                        $("#append-comments-here").append(body);
+                        $("#append-comments-here").append(linebreak);
+                        $("#append-comments-here").append(divider);
+                    }
+
+                } else {
+
+                    var none = $("<h5>").text("This article has no comments.");
+                    $("#append-comments-here").append(none);
+
+                }
+            });
+
         } else {
-            var message = $("<h1>").text("You have no saved articles.")
-            $("#append-saved").append(message)
+            var message = $("<h1>").text("You have no saved articles.");
+            $("#append-saved").append(message);
         }
     });
 }

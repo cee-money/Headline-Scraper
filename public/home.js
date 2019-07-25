@@ -18,7 +18,7 @@ function getArticles() {
                 var cardBody = $("<div>").addClass("card-body");
                 var title = $("<h4>").addClass("card-title").text(data[i].title);
                 // var summary = $("<p>").addClass("card-text").text("Summary to go right here");
-                var link = $("<a>").addClass("text-light").attr("href", data[i].link).text("View Article");
+                var link = $("<a>").addClass("text-light").attr("href", data[i].link).attr("target", "_blank").text("View Article");
     
                 $(cardBody).prepend(link);
                 // $(cardBody).prepend(summary);

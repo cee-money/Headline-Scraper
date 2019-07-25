@@ -80,6 +80,29 @@ app.get("/articles", function(req, res) {
     });
 });
 
+// Route for getting all Saved Articles from the db
+app.get("/saved", function(req, res) {
+    db.Articles.find({ saved: true })
+    .then(function(saved){
+        res.json(saved)
+    })
+    .catch(function(err) {
+        res.json(err);
+    });
+});
+
+// Route for toggling saved value to true when the saved button is pressed
+app.put("/save/:id", function(req, res){
+    console.log(req.params.id);
+    db.Articles.findOneAndUpdate({ _id: req.params.id }, { $set: { saved : true } } )
+    .then(function(updated){
+        res.json(updated)
+    })
+    .catch(function(err) {
+        res.json(err);
+    })
+})
+
 // Route for adding a comment to one article
 app.get("/article/:id", function(req, res) {
     db.Article.findOne({ _id: req.params.id })

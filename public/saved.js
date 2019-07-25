@@ -1,13 +1,15 @@
 // Grab the articles as a json
-$.getJSON("/articles", function(data) {
-    if (data) {
+$.getJSON("/saved", function(data) {
+    if (data.length > 0) {
+        console.log("it hit it")
        // For each one
         for (var i = 0; i < data.length; i++) {
             // Display the apropos information on the page
 
             var space = $("<br>")
             var card = $("<div>").addClass("card text-white bg-dark");
-            var saveButton = $("<button>").addClass("btn btn-secondary btn-sm").text("Save Article").attr("data-id", data[i]._id);
+            var commentBtn = $("<button>").addClass("btn btn-secondary btn-sm").text("Add Comment").attr("data-id", data[i]._id);
+            var deleteBtn = $("<button>").addClass("btn btn-secondary btn-sm").text("Delete Article").attr("data-id", data[i]._id);
             var cardHead = $("<div>").addClass("card-header");
             var cardBody = $("<div>").addClass("card-body");
             var title = $("<h4>").addClass("card-title").text(data[i].title);
@@ -18,29 +20,20 @@ $.getJSON("/articles", function(data) {
             $(cardBody).prepend(summary);
             $(cardBody).prepend(title);
             $(card).prepend(cardBody);
-            $(cardHead).prepend(saveButton);
+            $(cardHead).prepend(commentBtn);
+            $(cardHead).prepend(deleteBtn);
             $(card).prepend(cardHead);
-            $("#append-cards").append(card);
-            $("#append-cards").append(space);
+            $("#append-saved").append(card);
+            $("#append-saved").append(space);
         } 
     } else {
-        $("#append-cards").append("<h1>" + "Currently, no articles have been scraped." + "</h1>")
+        var message = $("<h1>").text("You have no saved articles.")
+        $("#append-saved").append(message)
     }
 });
 
-$("#scrape-btn").on("click", function() {
-
-// run the scrape route to get more articles
-// display a modal noting data.length (number of articles scraped)
-
-})
-
-$("#save-btn").on("click", function() {
-
-// toggled the saved field to true
 
 
-})
 
 $("#delete-btn").on("click", function() {
 
@@ -61,3 +54,4 @@ $("#save-comment").on("click", function() {
 // (title and body, send to backend for a post route)
     
 })
+    

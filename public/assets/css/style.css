@@ -9,3 +9,7 @@ body {
 .view, .delete, .comment {
     margin-right: 10px;
 }
+
+.remove-comment {
+    margin-left: 40px;
+}

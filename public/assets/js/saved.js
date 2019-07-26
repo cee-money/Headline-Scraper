@@ -51,14 +51,6 @@ function getSaved() {
             });
 
             $("#save-comment").on("click", function() {
-                console.log("Hitting here");
-
-                // add comment title and body to comment collection
-                // (title and body, send to backend for a post route)
-
-                // var newComment = {
-                    
-                // }
 
                 $.ajax({
                     method: "POST",
@@ -79,27 +71,49 @@ function getSaved() {
      
             });
 
-            // associate these with the articles using the data-id somehow
             $(".view").on("click", function (){
 
+                $("#append-comments-here").empty();
                 $("#view-comments").modal("toggle");
 
-                $.getJSON("/article/" + $(this).attr("data-id"), function(data) {
+                var ID = $(this).attr("data-id");
+
+                $.getJSON("/article/" + ID , function(data) {
 
                     if (!data.comments.length == []) {
 
+                        // $("#append-comments-here").empty();
+
                         for (var i = 0; i < data.comments.length; i++) {
 
-                            var title = $("<h4>").text(`Title: ${data.comments[i].title}`);
-                            var body = $("<p>").text(`Comment: ${data.comments[i].body}`);
+                            var commentDiv = $("<div>").attr("id", data.comments[i]._id);
+                            var removeBtn = $("<button>").addClass("btn btn-danger btn-sm remove-comment").attr("data-id", data.comments[i]._id).text("X");
+                            var title = $("<h5>").text(`${data.comments[i].title}`);
+                            var body = $("<p>").text(`${data.comments[i].body}`);
                             var linebreak = $("<br>");
                             var divider = $("<hr>");
 
-                            $("#append-comments-here").append(title);
-                            $("#append-comments-here").append(body);
-                            $("#append-comments-here").append(divider);
-                            $("#append-comments-here").append(linebreak);
+                            $("#append-comments-here").append(commentDiv);
+                            $(commentDiv).append(title);
+                            $(title).append(removeBtn);
+                            $(commentDiv).append(body);
+                            $(commentDiv).append(divider);
+                            $(commentDiv).append(linebreak);
                         }
+                    
+                        $(".remove-comment").on("click", function() {
+                        
+                            $.ajax({
+                                method: "DELETE",
+                                url: "/delete/" + $(this).attr("data-id")
+                            })
+                            .then(function(data) {
+                                console.log("Deleted comment");
+                            })
+
+                            $(`[id=${$(this).attr('data-id')}]`).remove();
+                            
+                        });
 
                     } else {
 

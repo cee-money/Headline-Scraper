@@ -16,12 +16,10 @@ var ArticlesSchema = new Schema({
     required: true,
     default: false
   },
-  comments: [
-    {
+  comments: [{
       type: Schema.Types.ObjectId,
       ref: "Comments"
-    }
-  ]
+  }]
 });
 
 // This creates our model from the above schema, using mongoose's model method

@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 
 var CommentsSchema = new Schema({
-  title: String,
+  title :String,
   body: String
 });
 

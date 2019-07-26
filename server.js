@@ -141,6 +141,14 @@ app.post("/article/:id", function(req, res) {
     });
 });
 
+// Route for deleting one comment associated with an article
+app.delete("/delete/:id", function(req, res) {
+    db.Comments.findOneAndDelete({ _id: req.params.id })
+    .then(function(err){
+        res.send(err)
+    });
+});
+
 
 // Start the server
 app.listen(PORT, function() {

@@ -8,7 +8,7 @@ var mongoose = require("mongoose");
 // Require all models
 var db = require("./models");
 
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 8080;
 
 // Initialize Express
 var app = express();
@@ -26,7 +26,10 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/headline-scraper", { useNewUrlParser: true });
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/headline-scraper";
+
+mongoose.connect(MONGODB_URI);
+
 
 
 app.get("/scrape", function(req, res) {
